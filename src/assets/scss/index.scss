@@ -123,11 +123,12 @@ a {
       content: '';
       width: 100%;
       height: 0px;
-      background-color: $blackColor;
+      background-color: $darkColor-1;
+      transform: translateY(-2px);
     }
 
     &:hover:before {
-      height: 2px;
+      height: 3px;
     }
   }
 
@@ -143,8 +144,6 @@ a {
 
 .page {
   min-height: calc(100vh - #{$spacing} * 6);
-  border-right: 1px solid $blackColor;
-  border-left: 1px solid $blackColor;
 }
 
 article {

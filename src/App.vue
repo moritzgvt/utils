@@ -45,6 +45,8 @@ export default {
 
 <style lang="scss">
 #navigationContainer {
+  position: sticky;
+  top: 0;
   background-color: transparent;
   border-bottom: 1px solid $blackColor;
 
@@ -86,32 +88,42 @@ export default {
 }
 
 footer {
-    .wrapper {
-      border: 1px solid $blackColor;
-      transition: background-color 0.3s ease-in-out;
+  margin-bottom: spacing(5);
 
-      &:hover {
-        background-color: #262626;
-      }
+  .wrapper {
+    border: 1px solid $blackColor;
+    transition: border-color .15s ease-in-out;
 
-      .content {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
+    a {
+      transition: color .15s ease-in-out;
     }
 
-    .legal, 
-    .copy {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      gap: spacing(2);
+    &:hover { 
+    border: 1px solid $darkColor-1;
 
       a {
-        line-height: spacing(6);
+        color: $lightColor-2;
       }
     }
+
+    .content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
+
+  .legal, 
+  .copy {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: spacing(2);
+
+    a {
+      line-height: spacing(6);
+    }
+  }
+}
 </style>

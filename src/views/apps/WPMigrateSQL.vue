@@ -6,7 +6,7 @@
           <Tags :tags="['SQL','Snippet','Helper']"/>
         </div>
 
-        <h1>Migrate WordPress DAtabase</h1>
+        <h1>Migrate WordPress Database</h1>
 
         <p>This is a tool to create a wordpress migration sql script.</p>
       </div>
