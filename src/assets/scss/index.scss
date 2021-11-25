@@ -1,0 +1,169 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900);
+
+:root {
+  // Base
+  --max-width: 100vw;
+  --page-width: 1200px;
+  --spacing: 8px;
+
+  //Colors
+  --black-color: #000;
+  --dark-color: #161616;
+  --dark-color-1: #262626;
+  --dark-color-2: #393939;
+
+  --light-color: #f3f3f3;
+  --light-color-1: #e0e0e0;
+  --light-color-2: #c6c6c6;
+}
+
+// Base
+$maxWidth: var(--max-width);
+$pageWidth: var(--page-width);
+$spacing: var(--spacing);
+
+
+// Colors
+$blackColor: var(--black-color);
+$darkColor: var(--dark-color);
+$darkColor-1: var(--dark-color-1);
+$darkColor-2: var(--dark-color-2);
+
+$lightColor: var(--light-color);
+$lightColor-1: var(--light-color-1);
+$lightColor-2: var(--light-color-2);
+
+* {
+  box-sizing: border-box;
+}
+
+// Styles
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $darkColor;
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+}
+
+main {
+  max-width: $maxWidth;
+  margin: 0 auto;
+}
+
+@function spacing($multiplier) {
+  @return calc(#{$spacing} * #{$multiplier});
+}
+
+$breakpoints: (
+  'small': 667px,
+  'medium': 1024px,
+  'large': 1280px
+);
+
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+      @content;
+    }
+  }
+}
+
+// Font Styles
+@mixin headline {
+  font-size: 4rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@mixin subline {
+  font-size: 1.2rem;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+@mixin text {
+  font-size: 1rem;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+@mixin caption {
+  font-size: .8rem;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+h1 {
+  @include headline;
+
+  color: $lightColor;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  @include text;
+
+  color: $lightColor;
+}
+
+a {
+  @include text;
+
+  display: inline-block;
+  color: $lightColor;
+
+  &.button {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      display: block;
+      content: '';
+      width: 100%;
+      height: 0px;
+      background-color: $blackColor;
+    }
+
+    &:hover:before {
+      height: 2px;
+    }
+  }
+
+  &.dark {
+    color: $blackColor;
+  }
+}
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 0 auto;
+}
+
+.page {
+  min-height: calc(100vh - #{$spacing} * 6);
+  border-right: 1px solid $blackColor;
+  border-left: 1px solid $blackColor;
+}
+
+article {
+  padding: spacing(10) 0;
+}
+
+.content {
+  padding: 0 spacing(5);
+}
+
+.spacer {
+  margin: spacing(5) 0;
+
+  &-half {
+    margin: spacing(2) 0;
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

@@ -1,32 +1,117 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="navigationContainer">
+      <div class="wrapper">
+        <div id="logo">
+          <a :href="homeUrl">moistgut.de</a>
+        </div>
+
+        <nav id="nav">
+          <router-link to="/">Home</router-link>
+          <router-link to="/wp-migrate-sql">Apps</router-link>
+        </nav>
+      </div>
     </div>
-    <router-view/>
+    <main>
+      <router-view/>
+    </main>
+    <footer>
+      <div class="wrapper">
+        <div class="content">
+          <span class="copy">
+            <a class="button dark" href="https://moritzgut.de" target="_blank">{{ new Date().getFullYear() }} &copy; Moritz Gut</a>
+          </span>
+          <span class="legal">
+            <a class="button dark" href="/impressum">Impressum</a>
+            <a class="button dark" href="/impressum">Datenschutz</a>
+          </span>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+  name: 'App',
+  computed: {
+    homeUrl: () => {
+      return window.location.origin;
     }
   }
 }
+</script>
+
+
+<style lang="scss">
+#navigationContainer {
+  background-color: transparent;
+  border-bottom: 1px solid $blackColor;
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #logo {
+    width: 100px;
+    color: $lightColor;
+    cursor: pointer;
+    
+    @include subline;
+
+    a {
+      color: $lightColor;
+      text-decoration: none;
+    }
+  }
+
+  #nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+      @include subline;
+      color: $lightColor;
+      line-height: spacing(6);
+      padding: 0 spacing(2);
+      
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+footer {
+    .wrapper {
+      border: 1px solid $blackColor;
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #262626;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .legal, 
+    .copy {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: spacing(2);
+
+      a {
+        line-height: spacing(6);
+      }
+    }
+  }
 </style>

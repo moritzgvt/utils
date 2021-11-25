@@ -1,0 +1,117 @@
+<template>
+  <div class="wrapper page">
+    <article>
+      <div class="content">
+        <div class="spacer-half">
+          <Tags :tags="['SQL','Snippet','Helper']"/>
+        </div>
+
+        <h1>Migrate WordPress DAtabase</h1>
+
+        <p>This is a tool to create a wordpress migration sql script.</p>
+      </div>
+
+      <div class="spacer">
+        <div class="inputs">
+          <input v-model="table_prefix" placeholder="Enter table prefix" @click="handleClick">
+          <input v-model="origin_url" placeholder="Enter origin url" @click="handleClick">
+          <input v-model="target_url" placeholder="Enter target url" @click="handleClick">
+        </div>
+
+<pre><code id="wp-migrate-snippet" class="language-sql">
+UPDATE {{ table_prefix }}options SET option_value = replace(option_value, '{{ origin_url }}', '{{ target_url }}') WHERE option_name = 'home' OR option_name = 'siteurl';
+
+UPDATE {{ table_prefix }}posts SET guid = replace(guid, '{{ origin_url }}','{{ target_url }}');
+
+UPDATE {{ table_prefix }}posts SET post_content = replace(post_content, '{{ origin_url }}', '{{ target_url }}');
+
+UPDATE {{ table_prefix }}postmeta SET meta_value = replace(meta_value,'{{ origin_url }}','{{ target_url }}');
+</code></pre>
+
+        <div class="center" >
+          <div @click="copyToClipboard">
+            <IconButton icon="copy"/>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</template>
+
+<script>
+import IconButton from '../../components/general/IconButton.vue';
+import Tags from '../../components/general/Tags.vue';
+
+export default {
+  name: 'Page',
+  components: {
+    IconButton,
+    Tags
+  },
+  data() {
+    return {
+      table_prefix: 'wp_',
+      origin_url: 'http://localhost:8080',
+      target_url: 'https://example.com',
+    }
+  },
+  computed: {
+    slug() {
+      return this.$router.currentRoute.params.slug;
+    }
+  },
+  methods: {
+    handleClick(e) {
+      e.target.select();
+    },
+    copyToClipboard() {
+      const text = document.querySelector('#wp-migrate-snippet').getInnerHTML()
+
+      navigator.clipboard.writeText(text.trim()).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: spacing(1);
+
+    @include breakpoint('small') {
+      flex-direction: row;
+    }
+
+    input {
+      background-color: #262626;
+      border: none;
+      line-height: spacing(7);
+      vertical-align: middle;
+      padding: 0 spacing(5);
+      @include subline;
+      color: $lightColor;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  pre {
+    overflow: auto;
+    padding: spacing(3) spacing(5);
+    background-color: #262626;
+    color: $lightColor;
+    margin: spacing(1) 0;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+</style>
