@@ -2,19 +2,22 @@
   <div id="app">
     <div id="navigationContainer">
       <div class="wrapper">
-        <div id="logo">
-          <a :href="homeUrl">moistgut.de</a>
+        <div id="logo" @click="$router.push({path: '/'})">
+            <Logo light/>
         </div>
 
         <nav id="nav">
-          <router-link to="/">Home</router-link>
-          <router-link to="/wp-migrate-sql">Apps</router-link>
+          <Menu :items="mainMenu"/>
         </nav>
       </div>
     </div>
+
     <main>
-      <router-view/>
+      <transition name="view-change" mode="out-in">
+        <router-view/>
+      </transition>
     </main>
+
     <footer>
       <div class="wrapper">
         <div class="content">
@@ -22,8 +25,7 @@
             <a class="button dark" href="https://moritzgut.de" target="_blank">{{ new Date().getFullYear() }} &copy; Moritz Gut</a>
           </span>
           <span class="legal">
-            <a class="button dark" href="/impressum">Impressum</a>
-            <a class="button dark" href="/impressum">Datenschutz</a>
+            <Menu :items="legalMenu"/>
           </span>
         </div>
       </div>
@@ -32,11 +34,33 @@
 </template>
 
 <script>
+import Logo from './components/general/Logo.vue';
+import Menu from './components/general/Menu.vue';
+
 export default {
   name: 'App',
-  computed: {
-    homeUrl: () => {
-      return window.location.origin;
+  components: {
+    Logo,
+    Menu
+  },
+  data() {
+    return {
+      mainMenu: [
+        {
+          text: 'Apps',
+          url: '/apps'
+        }
+      ],
+      legalMenu: [
+        {
+          text: 'Impressum',
+          url: '/impressum'
+        },
+        {
+          text: 'Datenschutz',
+          url: '/datenschutz'
+        }
+      ]
     }
   }
 }
@@ -47,19 +71,25 @@ export default {
 #navigationContainer {
   position: sticky;
   top: 0;
-  background-color: transparent;
-  border-bottom: 1px solid $blackColor;
+  background: $darkColor;
+  z-index: 900;
 
   .wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 spacing(2);
+
+    @include breakpoint('small') {
+      padding: 0;
+    }
   }
 
   #logo {
-    width: 100px;
+    width: 40px;
     color: $lightColor;
     cursor: pointer;
+    padding: 20px 0;
     
     @include subline;
 
@@ -70,60 +100,76 @@ export default {
   }
 
   #nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    .menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-    a {
-      @include subline;
-      color: $lightColor;
-      line-height: spacing(6);
-      padding: 0 spacing(2);
-      
-      &:last-child {
-        padding-right: 0;
+      a {
+        @include subline;
+        color: $lightColor;
+        line-height: spacing(6);
+        padding: 0 spacing(2);
+        
+        &:last-child {
+          padding-right: 0;
+        }
       }
     }
   }
 }
 
 footer {
-  margin-bottom: spacing(5);
-
   .wrapper {
-    border: 1px solid $blackColor;
-    transition: border-color .15s ease-in-out;
+    padding: 0 spacing(2);
 
     a {
-      transition: color .15s ease-in-out;
-    }
-
-    &:hover { 
-    border: 1px solid $darkColor-1;
-
-      a {
-        color: $lightColor-2;
-      }
+      @include text;
+      color: $lightColor-2;
+      text-align: center;
     }
 
     .content {
       display: flex;
-      flex-direction: row;
+      flex-direction: column-reverse;
       justify-content: space-between;
       align-items: center;
+      gap: spacing(1);
+
+      @include breakpoint('small') {
+        flex-direction: row;
+        gap: spacing(2);
+      }
     }
   }
 
-  .legal, 
+  .legal .menu, 
   .copy {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    gap: spacing(2);
+    gap: spacing(1);
+
+    @include breakpoint('small') {
+      flex-direction: row;
+      gap: spacing(2);
+    }
 
     a {
       line-height: spacing(6);
     }
   }
+}
+
+.view-change-enter-active, .view-change-leave-active {
+  transform: translateY(0px);
+  opacity: 1;
+  transition: 
+    opacity .1s ease-in-out,
+    transform .1s ease-in-out;
+}
+.view-change-enter, .view-change-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
 }
 </style>

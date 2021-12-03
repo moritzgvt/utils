@@ -42,7 +42,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: $darkColor;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
 }
 
@@ -69,16 +69,32 @@ $breakpoints: (
   }
 }
 
+@mixin coarse {
+  @media (pointer: coarse) {
+    @content;
+  }
+}
+
+@mixin fine {
+  @media (pointer: fine) {
+    @content;
+  }
+}
+
 // Font Styles
 @mixin headline {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 700;
   text-decoration: none;
+
+  @include breakpoint('small') {
+    font-size: 4rem;
+  }
 }
 
 @mixin subline {
   font-size: 1.2rem;
-  font-weight: 100;
+  font-weight: 175;
   text-decoration: none;
 }
 
@@ -108,33 +124,10 @@ p {
   color: $lightColor;
 }
 
-a {
+.link {
   @include text;
-
-  display: inline-block;
   color: $lightColor;
-
-  &.button {
-    position: relative;
-
-    &:before {
-      position: absolute;
-      display: block;
-      content: '';
-      width: 100%;
-      height: 0px;
-      background-color: $darkColor-1;
-      transform: translateY(-2px);
-    }
-
-    &:hover:before {
-      height: 3px;
-    }
-  }
-
-  &.dark {
-    color: $blackColor;
-  }
+  text-decoration: none;
 }
 
 .wrapper {
@@ -146,7 +139,7 @@ a {
   min-height: calc(100vh - #{$spacing} * 6);
 }
 
-article {
+article, .module {
   padding: spacing(10) 0;
 }
 
@@ -165,4 +158,22 @@ article {
 .center {
   display: flex;
   justify-content: center;
+}
+
+@keyframes underline-expand {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes underline-contract {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
 }
