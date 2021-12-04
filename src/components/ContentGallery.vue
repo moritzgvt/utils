@@ -12,9 +12,15 @@
           class="gallery__item"
         >
           <div class="gallery__item__wrapper">
-            <router-link :to="item.link">
+            <div class="spacer-half">
+              <Tags :tags="item.tags"/>
+            </div>
+
+            <router-link :to="item.url">
               <h1>{{ item.title }}</h1>
             </router-link>
+            
+            <p>{{ item.description }}</p>
           </div>
         </div>
       </div>
@@ -23,8 +29,13 @@
 </template>
 
 <script>
+import Tags from './general/Tags.vue';
+
 export default {
   name: 'ContentGallery',
+  components: {
+    Tags
+  },
   props: {
     title: {
       type: String,
@@ -50,10 +61,10 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     gap: spacing(2);
+    padding: spacing(5) 0;
 
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
-    margin-left: spacing(3);
 
     &::-webkit-scrollbar {
       display: none;
@@ -64,11 +75,20 @@ export default {
   &__item {
     height: 500px;
     width: 80vw;
-    background-color: $darkColor-1;
     flex-shrink: 0;
     padding: spacing(2);
     border-radius: 5px;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
+    box-shadow: $shadowElevationMedium;
+    background-color: $darkColor-1;
+
+    @include breakpoint('small') {
+      width: 50%;
+    }
+
+    &:first-child {
+      margin-left: spacing(3);
+    }
 
     &:last-child {
       margin-right: spacing(3);

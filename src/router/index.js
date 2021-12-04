@@ -8,23 +8,13 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    alias: '/apps',
     component: Home
   },
   {
-    path: '/apps',
-    name: 'Apps',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Apps.vue')
-  },
-  {
-    path: '/wp-migrate-sql',
+    path: '/apps/:slug',
     name: 'WP Migrate SQL',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/apps/WPMigrateSQL.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AppsPage.vue')
   }
 
 ]

@@ -29,7 +29,7 @@ export default {
     position: relative;
     padding: spacing(.5) spacing(2);
     border-radius: 20px;
-    border: 1px solid $lightColor-2;
-    color: $lightColor-2;
+    border: 1px solid $lightColor;
+    color: $lightColor;
   }
 </style>

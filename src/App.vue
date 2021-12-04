@@ -7,7 +7,7 @@
         </div>
 
         <nav id="nav">
-          <Menu :items="mainMenu"/>
+          
         </nav>
       </div>
     </div>
@@ -47,7 +47,7 @@ export default {
     return {
       mainMenu: [
         {
-          text: 'Apps',
+          text: 'About',
           url: '/apps'
         }
       ],
@@ -125,7 +125,7 @@ footer {
 
     a {
       @include text;
-      color: $lightColor-2;
+      color: $lightColor-1;
       text-align: center;
     }
 
